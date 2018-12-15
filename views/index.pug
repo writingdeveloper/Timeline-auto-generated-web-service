@@ -1,5 +1,132 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible', content='ie=edge')
+  title School Timeline Service
+  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO', crossorigin='anonymous')
+  link(rel='stylesheet', href='stylesheets/style.css')
+#header
+  h1= `${userId} 시간표`
+  p(id="userId" hidden)= `${userId}`
+#mainContainer
+  #timelineListContainer
+    #list
+      table(id="subjectList" class="table table-bordered")
+        thead(id="thead")
+          tr
+            th(class="subjectCode") 과목코드
+            th(class="subjectName") 과목명
+            th(class="credit") 학점
+            th(class="major") 개설학부
+            th(class="day") 요일
+            th(class="time") 교시
+            th(class="submitSubject") 수강신청
+        tbody
+          each data in subjectData
+            tr
+              td(class="subjectCode")= `${data.subjectCode}`
+              td(class="subjectName")= `${data.subjectName}`
+              td(class="credit")= `${data.credit}`
+              td(class="major")= `${data.major}` 
+              td(class="day")=`${data.day} ${data.day1}`
+                select(id=`${data.subjectCode}` hidden)
+                  //- option(disabled selected value=`null`) 선택
+                  option(value=`${data.day}`)= `${data.day}`
+                  option(value=`${data.day1}`)=`${data.day1}`
+              td(class="time" id="timeset")= `${data.time},${data.time1}`
+                select(id=`${data.subjectCode}Time` hidden)
+                  option(value=`${data.time}`)
+                  option(value=`${data.time1}`)
+              td(class="submitSubject")
+                input.checkBtn(type='button', value='신청')
+    #selectedList
+      table(id="subjectSelect" class="table table-bordered")
+        thead
+          tr
+            th 과목코드
+            th 과목명
+            th 학점
+            th 개설학부
+            th 요일
+            th 교시
+            th 과목삭제
+        tbody(id="subjectSelectBody")
+    //- #counter 총 수강학점 : 0
+  #timelineTable
+    table(id="timeline" class="table table-bordered")
+        thead(id="thead")
+          tr
+            th(id="null")
+            th 월요일
+            th 화요일
+            th 수요일
+            th 목요일
+            th 금요일
+        tbody
+          tr
+            td 1교시
+            td(id="mon1") 
+            td(id="tue1")
+            td(id="wed1")
+            td(id="tur1")
+            td(id="fri1")
+          tr
+            td 2교시
+            td(id="mon2") 
+            td(id="tue2")
+            td(id="wed2")
+            td(id="tur2")
+            td(id="fri2")
+          tr
+            td 3교시
+            td(id="mon3") 
+            td(id="tue3")
+            td(id="wed3")
+            td(id="tur3")
+            td(id="fri3")
+          tr
+            td 4교시
+            td(id="mon4") 
+            td(id="tue4")
+            td(id="wed4")
+            td(id="tur4")
+            td(id="fri4")
+          tr
+            td 5교시
+            td(id="mon5") 
+            td(id="tue5")
+            td(id="wed5")
+            td(id="tur5")
+            td(id="fri5")
+          tr
+            td 6교시
+            td(id="mon6") 
+            td(id="tue6")
+            td(id="wed6")
+            td(id="tur6")
+            td(id="fri6")
+          tr
+            td 7교시
+            td(id="mon7") 
+            td(id="tue7")
+            td(id="wed7")
+            td(id="tur7")
+            td(id="fri7")
+          tr
+            td 8교시
+            td(id="mon8") 
+            td(id="tue8")
+            td(id="wed8")
+            td(id="tur8")
+            td(id="fri8")
+    #utility
+      form(action=`/hi/submit`, method="post")
+        input(type="hidden" id="data" name="sql" value="1")
+        button(type="submit") 수강신청  
+            
+#footer
+script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49', crossorigin='anonymous')
+script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy', crossorigin='anonymous')
+script(src='javascripts/app.js')
