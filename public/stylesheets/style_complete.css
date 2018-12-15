@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+#header>h1 {
+    margin-top: 50px;
+    text-align: center;
+}
+
+#mainContainer {
+    width: 50%;
+    margin: 0 auto;
+}
+
+button {
+    margin: auto;
+    display: block;
+}
