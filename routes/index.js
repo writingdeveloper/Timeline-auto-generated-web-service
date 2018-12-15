@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 });
 
 
-// User Page
+// User Apply Page
 router.get('/:userId', function (req, res, next) {
   let userId = req.params.userId;
   // GET Subject Data from DB
@@ -23,18 +23,56 @@ router.get('/:userId', function (req, res, next) {
     }
 
     res.render('index', {
-      subjectData: data
+      subjectData: data,
+      userId: userId
+    });
+  });
+});
+
+
+// User Complete Page
+router.get(`/:userId/complete`, function (req, res, next) {
+  let userId = req.params.userId;
+  // GET Apply Data
+  db.query(`SELECT * FROM USER_DATA WHERE id='${userId}'`, function (error, data) {
+    if (error) {
+      throw error;
+    }
+    res.render('complete', {
+      userId: userId,
+      dataArray: data
     });
   });
 });
 
 router.post(`/:userId/submit`, function (req, res, next) {
-  let userId=req.params.userId;
-  
-  let reqProfessor = req.body.reqProfessor; // 교수님에게 개인 요청 사항
-  console.log(reqProfessor);
+  let userId = req.params.userId;
+  let sqlData = req.body.sql;
+
+  let sql = `INSERT INTO USER_DATA (id, subjectCode, subjectName) VALUES ${sqlData}`;
+
+  db.query(sql);
   console.log('success');
-  res.redirect(`/${userId}`);
+  console.log(sqlData);
+
+  res.redirect(`/${userId}/complete`); //TODO :: goto Complete 화면
 });
+
+router.post('/membercheck', function (req, res, next) {
+  let userId = req.body.id;
+  console.log(userId);
+
+  db.query(`SELECT 0 FROM USER_DATA WHERE id='${userId}'`, function (error, data) {
+    if (error) {
+      throw error;
+    }
+    if (data.length > 0) {
+      console.log('EXIST!');
+    } else {
+      console.log('NEW MEMBER');
+      res.redirect(`/${userId}`);
+    }
+  });
+})
 
 module.exports = router;
