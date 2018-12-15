@@ -1,8 +1,126 @@
+@charset "utf-8";
+
+/* #header {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 1.0em;
+  padding-bottom: 5px;
+  color: #333;
+} */
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width: 100%;
+  font-size: 0.8rem !important;
 }
 
-a {
-  color: #00B7FF;
+#mainContainer {
+  width: 80%;
+  height: 70%;
+  margin: 40px auto;
+}
+
+#subjectList {
+  width: 700px;
+}
+
+#subjectSelect {
+  width: 700px;
+}
+
+#timelineListContainer {
+  padding-left: 5px;
+  float: left;
+}
+
+#selectedList {
+  min-height: 100px;
+}
+
+#timelineTable {
+  width: 510px;
+  float: left;
+  padding-left: 2%;
+}
+
+#timeline {
+  width: 510px;
+  height: 448px;
+}
+
+/* Deactivation Table Header Click Event */
+#thead {
+  pointer-events: none;
+}
+
+.highlight {
+  background-color: #85d3ff;
+}
+
+/* Fixed subjectList table Header */
+#subjectList>tbody {
+  display: block;
+  height: 400px;
+  overflow: auto;
+}
+
+#subjectList thead,
+#subjectList tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#subjectList>thead {
+  width: calc(100% - 18px)
+}
+
+/* Fixed subjectSelect table Header */
+#subjectSelect>tbody {
+  display: block;
+  height: 200px;
+  overflow: auto;
+}
+
+#subjectSelect thead,
+#subjectSelect tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#subjectSelect>thead {
+  width: calc(100% - 18px)
+}
+
+tr>.subjectCode {
+  width: 77px;
+}
+
+tr>.subjectName {
+  width: 190px;
+}
+
+tr>.credit {
+  width: 57px;
+}
+
+tr>.major {
+  width: 114px;
+}
+
+tr>.day {
+  width: 82px
+}
+
+tr>.time {
+  width: 63px;
+}
+
+tr>.submitSubject {
+  width: 82px;
+}
+
+#timeline>tbody>tr>td {
+  width: 86px;
+  height: 50px;
+  padding: 0px 0px 0px 0px;
 }
