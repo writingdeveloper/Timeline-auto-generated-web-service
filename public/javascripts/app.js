@@ -1,13 +1,6 @@
 /* Project Init Settings */
 let sbjCodeArr = new Array();
-
-// Total Credit Check Function
-function CreditCheck(count) {
-    if (count > 21) {
-        alert('수강가능한 총 최대학점은 21학점입니다');
-        return 21;
-    }
-}
+let count = 0;
 
 /* 랜덤 컬러 생성 함수
 타임라인에서 사용하는 각각의 칸 색깔 생성
@@ -22,7 +15,7 @@ function getRamdomColor() {
     return color;
 }
 
-// 카운터 초기설정 및 초기화
+// // 카운터 초기설정 및 초기화
 $('#counter').data('count', 0);
 
 // Single Click Event Function
@@ -65,10 +58,30 @@ $('.checkBtn').click(function () {
     let newDayArray = new Array(); //
     let newTimeArray = new Array();
 
+    // 수강항목 테이블의 총 수강학점
+    // let totalCredit = Number(td.eq(2).text());
+    // $('#counter').html((function () {
+    //     var $this = $(this),
+    //         count = $(this).data('count') + totalCredit;
+
+    //     console.log(count);
+    //     $this.data('count', count);
+
+
+
+    //     if (count < 21) {
+    //         return '총 수강학점 : ' + count; // 현재 신청된 총 학점 출력
+    //     }
+    //     // CreditCheck(count); 
+    //     alert('최대 수강학점은 21학점입니다'); // 21학점 이상인 경우 경고창 출력
+    //     count = 21; // 학점 초기화
+    //     return '총 수강학점 : ' + count; // 21학점으로 초기화
+    // }))
+
+
 
     //variable with the new value to be added in the array
     let newPush = td.eq(0).text();
-
     //add if it is not in the array, and sends a warning if
     if (sbjCodeArr.indexOf(newPush) == -1) {
         //If the array does not have this element
@@ -104,7 +117,7 @@ $('.checkBtn').click(function () {
         major.innerHTML = td.eq(3).text();
         day.innerHTML = newDayArray[0] + ' ' + newDayArray[1];
         time.innerHTML = td.eq(5).text();
-        deleteButton.innerHTML = "<button>삭제</button>";
+        deleteButton.innerHTML = `<button id="remove_button">삭제</button>`;
 
         let clickedItem = td.eq(0).text();
         console.log(clickedItem);
@@ -118,6 +131,7 @@ $('.checkBtn').click(function () {
         console.log(timeArray);
 
         let timelineColor = getRamdomColor();
+
         for (i = 0; i < dayArray.length; i++) {
             let day;
 
@@ -150,34 +164,91 @@ $('.checkBtn').click(function () {
             table.style.backgroundColor = timelineColor;
             table1.style.backgroundColor = timelineColor;
         }
-
-        // 삭제버튼 클릭시 수강항목 테이블에서 데이터 제거
-        $('button').click(function () {
-            $(this).parents('tr').first().remove();
-        });
-
-        // 수강항목 테이블의 총 수강학점
-        let totalCredit = Number(td.eq(2).text());
-        $('#counter').html((function () {
-            var $this = $(this),
-                count = $(this).data('count') + totalCredit;
-            console.log(count);
-
-            $this.data('count', count);
-            CreditCheck(count); // 21학점 이상인 경우 경고창 출력
-            return '총 수강학점 : ' + count;
-        }))
-
     } else {
         //If the array already has this element
-        alert("Array already has " + newPush)
+        alert(`${newPush} 과목은 이미 수강신청 항목에 추가된 과목입니다.`)
+        // sbjCodeArr.pop(newPush);
     }
 
     //throws the value of the new array in the console for verification
     console.log(sbjCodeArr);
 
+    // 삭제버튼 클릭시 수강항목 테이블에서 데이터 제거
+    $('button').click(function () {
 
+        let removeCredit = Number($('#remove_button').parents('tr').children('td:eq(2)').text());
+        console.log(`삭제된 학점 : ${removeCredit}`);
+
+        let clickTime = $(this).parents('tr').children('td:eq(5)').text().substring(0, 1);
+        console.log(clickTime);
+        let clickTime1 = $(this).parents('tr').children('td:eq(5)').text().substring(2, 3);
+        console.log(clickTime1);
+        let clickDay = $(this).parents('tr').children('td:eq(4)').text().substring(0, 3);
+        console.log(clickDay);
+        let clickDay1 = $(this).parents('tr').children('td:eq(4)').text().substring(4, 7);
+        console.log(clickDay1);
+
+        let day;
+        let day1;
+        switch (clickDay) {
+            case '월요일':
+                day = 'mon';
+                break;
+            case '화요일':
+                day = 'tue';
+                break;
+            case '수요일':
+                day = 'wed';
+                break;
+            case '목요일':
+                day = 'tur';
+                break;
+            case '금요일':
+                day = 'fri';
+                break;
+        }
+        switch (clickDay1) {
+            case '월요일':
+                day1 = 'mon';
+                break;
+            case '화요일':
+                day1 = 'tue';
+                break;
+            case '수요일':
+                day1 = 'wed';
+                break;
+            case '목요일':
+                day1 = 'tur';
+                break;
+            case '금요일':
+                day1 = 'fri';
+                break;
+        }
+
+
+        console.log((day + clickTime) + ' ' + (day1 + clickTime1));
+
+        let firstTable = document.getElementById(day + clickTime);
+        console.log(firstTable);
+        let firstTable1 = document.getElementById(day1 + Number(clickTime1));
+        console.log(firstTable1);
+
+        let secondTable=document.getElementById(day+(Number(clickTime)+1));
+        let secondTable1=document.getElementById(day1+(Number(clickTime1)+1));
+
+
+        firstTable.style.backgroundColor = '#fff';
+        firstTable1.style.backgroundColor = '#fff';
+        secondTable.style.backgroundColor = '#fff';
+        secondTable1.style.backgroundColor = '#fff';
+
+        sbjCodeArr.pop(newPush); // 과목 중복체크 배열에서 새로 추가된 요소 삭제
+        $(this).parents('tr').first().remove(); // 선택된 수강항목 목록에서 tr 요소 삭제
+    });
 })
+
+
+
 
 // Single Click Select Event to Timeline
 $(document).ready(function () {
