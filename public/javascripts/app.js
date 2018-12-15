@@ -2,6 +2,7 @@
 let sbjCodeArr = new Array();
 let count = 0;
 let dataArr = new Array();
+let finalData='';
 
 // 타임라인 중복과목 체크용 배열
 let checkCollision = new Array();
@@ -154,7 +155,7 @@ $('.checkBtn').click(function () {
             });
             console.log(newTimeArray);
             // 선택된 데이터 배열 생성 (요일 포함)
-            let tdArr = [td.eq(0).text(), td.eq(1).text(), Number(td.eq(2).text()), td.eq(3).text(), newDayArray[0], newDayArray[1], newTimeArray[0], newTimeArray[1]];
+            let tdArr = [td.eq(0).text(), td.eq(1).text(), Number(td.eq(2).text()), td.eq(3).text(), newDayArray[0], newDayArray[1], newTimeArray[0], newTimeArray[1], $('#userId').text()];
             console.log(tdArr);
 
             // 선택된 수강항목 테이블에 삽입
@@ -215,6 +216,15 @@ $('.checkBtn').click(function () {
                 table1.style.backgroundColor = timelineColor;
 
             }
+            
+            let userIdData=$('#userId').text();
+            let sbjCodeData=td.eq(0).text();
+            let sjbNameData=td.eq(1).text();
+            // SQL 데이터 생성
+            finalData += `('${userIdData}','${sbjCodeData}','${sjbNameData}'),`;
+            console.log(finalData);
+            // 서버로 전달될 데이터 전달용 코드
+            $(`#data`).attr('value', finalData.slice(0, -1));
 
         } else {
             //If the array already has this element
