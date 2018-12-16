@@ -31,7 +31,6 @@ head
               td(class="major")= `${data.major}` 
               td(class="day")=`${data.day} ${data.day1}`
                 select(id=`${data.subjectCode}` hidden)
-                  //- option(disabled selected value=`null`) 선택
                   option(value=`${data.day}`)= `${data.day}`
                   option(value=`${data.day1}`)=`${data.day1}`
               td(class="time" id="timeset")= `${data.time},${data.time1}`
@@ -52,7 +51,6 @@ head
             th 교시
             th 과목삭제
         tbody(id="subjectSelectBody")
-    //- #counter 총 수강학점 : 0
   #timelineTable
     table(id="timeline" class="table table-bordered")
         thead(id="thead")
@@ -121,6 +119,7 @@ head
             td(id="tur8")
             td(id="fri8")
     #utility
+      #counter 총 수강학점 : 0
       form(action=`/${userId}/submit`, method="post")
         input(type="hidden" id="data" name="sql" value="1")
         button(type="submit") 수강신청  
