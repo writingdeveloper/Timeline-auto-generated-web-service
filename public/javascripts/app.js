@@ -2,7 +2,7 @@
 let sbjCodeArr = new Array();
 let count = 0;
 let dataArr = new Array();
-let finalData='';
+let finalData = '';
 
 // 타임라인 중복과목 체크용 배열
 let checkCollision = new Array();
@@ -212,14 +212,17 @@ $('.checkBtn').click(function () {
                 let table = document.getElementById(clickDay);
                 let table1 = document.getElementById(clickDay1);
 
-                table.style.backgroundColor = timelineColor;
-                table1.style.backgroundColor = timelineColor;
-
+                if (table === null) {
+                    console.log('Credit Error');
+                } else {
+                    table.style.backgroundColor = timelineColor;
+                    table1.style.backgroundColor = timelineColor;
+                }
             }
-            
-            let userIdData=$('#userId').text();
-            let sbjCodeData=td.eq(0).text();
-            let sjbNameData=td.eq(1).text();
+
+            let userIdData = $('#userId').text();
+            let sbjCodeData = td.eq(0).text();
+            let sjbNameData = td.eq(1).text();
             // SQL 데이터 생성
             finalData += `('${userIdData}','${sbjCodeData}','${sjbNameData}'),`;
             console.log(finalData);
@@ -290,15 +293,13 @@ $('.checkBtn').click(function () {
                 break;
         }
 
-        // 삭제되는 테이블 ID값 출력
-        // console.log((day + clickTime) + ' ' + (day1 + clickTime1));
-
-        // 삭제된
+        // 삭제할 선택된 요소 
         let firstTable = document.getElementById(day + clickTime);
         let firstTable1 = document.getElementById(day1 + Number(clickTime1));
         let secondTable = document.getElementById(day + (Number(clickTime) + 1));
         let secondTable1 = document.getElementById(day1 + (Number(clickTime1) + 1));
         console.log((day + clickTime), (day + (Number(clickTime) + 1)), (day1 + clickTime1), (day + (Number(clickTime1) + 1)));
+        console.log(firstTable, firstTable1, secondTable, secondTable1);
 
         // 시간표 충돌 확인 배열에서 요일 교시 데이터 삭제
         checkCollision.pop(day + clickTime);
@@ -310,12 +311,17 @@ $('.checkBtn').click(function () {
         sbjCodeArr.pop(day1 + clickTime1)
         sbjCodeArr.pop(Number(clickTime1) + 1)
 
-
         // 삭제된 과목 시간표에서 색상 초기화
-        firstTable.style.backgroundColor = '#fff';
-        firstTable1.style.backgroundColor = '#fff';
-        secondTable.style.backgroundColor = '#fff';
-        secondTable1.style.backgroundColor = '#fff';
+        if (firstTable1 === null || secondTable1 === null) {
+            firstTable.style.backgroundColor = '#fff';
+            secondTable.style.backgroundColor = '#fff';
+            console.log('Single Item');
+        } else {
+            firstTable.style.backgroundColor = '#fff';
+            firstTable1.style.backgroundColor = '#fff';
+            secondTable.style.backgroundColor = '#fff';
+            secondTable1.style.backgroundColor = '#fff';
+        }
 
         // 삭제된 과목 시간표에서 텍스트 초기화
         $(`#${day+clickTime}`).text('');
