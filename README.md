@@ -1,5 +1,6 @@
 # 시간표 자동 생성 웹서비스
 ![](https://img.shields.io/badge/Code%20Statue-Open-brightgreen.svg)
+[![Build Status](https://travis-ci.com/sangumee/Timeline-auto-generated-web-service.svg?branch=master)](https://travis-ci.com/sangumee/Timeline-auto-generated-web-service)
 
 ## 데모
 
