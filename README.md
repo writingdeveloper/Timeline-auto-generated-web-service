@@ -7,7 +7,7 @@
 현재 이 웹서비스는 두가지 호스팅을 통하여 호스팅되고 있습니다.
 
 #1 [Heroku NodeJS 호스팅] : https://auto-timeline.herokuapp.com  
-#2 [개인 라즈베리파이 호스팅] : 
+#2 [개인 라즈베리파이 호스팅] : 작업중
 
 ## 소개
 
@@ -16,7 +16,7 @@
 ## 사용된 기술
 
 Server-Side : NodeJS 10.14.1, Express Framework & Pug HTML Tempalate  
-Database : MariaDB 10.1.23  
+Database : MariaDB 10.1.23 (라즈베리파이에서 호스팅 중)
 Library : Bootstrap, jQuery, DataTables(Admin 테이블만)  
 
 ## 핵심 코드
@@ -91,3 +91,17 @@ Ex) 신청 버튼을 눌러 비교용 배열에 이미 ['mon1', 'mon2', 'tue2', 
 관리자 페이지에서는 수강신청이 완료된 전체 데이터를 확인할 수 있습니다. 해당 페이지는 [DataTables](https://datatables.net/)의 라이브러리를 사용하여 수강신청 리스트들에 대한 UI 및 활용도를 개선하였습니다. 해당 라이브러리에서 제공하는 기능을 기존의 테이블과 접목시켜 정렬, 검색, 페이지 열갯수등을 관리가능합니다.
 
 기존의 수강신청페이지에서 이 라이브러리를 사용하지 않은 이유는 라이브러리를 사용하지 않고 테이블 데이터 처리 방법론을 연구해보는것이 더 도움이 될것이라고 생각하였기 때문입니다.
+
+## Travis CI
+
+[![Build Status](https://travis-ci.org/sangumee/Timeline-auto-generated-web-service.svg?branch=master)](https://travis-ci.org/sangumee/Timeline-auto-generated-web-service)
+
+[Build Test](https://travis-ci.org/sangumee/Timeline-auto-generated-web-service)
+
+## NPM
+
+[NPM Link](https://www.npmjs.com/package/timeline-auto-generated-web-service)
+
+이 프로젝트에는 NPM 저장소에도 소스코드가 공유되어있습니다. 아래 명령어로도 설치가 가능합니다.
+
+    npm i timeline-auto-generated-web-service
