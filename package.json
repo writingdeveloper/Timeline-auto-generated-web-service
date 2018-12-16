@@ -1,7 +1,7 @@
 {
   "name": "timeline-auto-generated-web-service",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "node ./bin/www"
   },
