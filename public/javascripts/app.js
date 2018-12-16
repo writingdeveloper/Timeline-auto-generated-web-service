@@ -14,8 +14,8 @@ function getRamdomColor() {
     return color; // 호출될때마다 다른 색상을 return
 }
 
-// // // 카운터 초기설정 및 초기화
-// $('#counter').data('count', 0);
+// 카운터 초기설정 및 초기화
+$('#counter').data('count', 0);
 
 // 과목리스트에서 클릭된 Row 색상 Toggle 함수
 function selectList() {
@@ -50,26 +50,7 @@ $('.checkBtn').click(function () {
     let newDayArray = new Array();
     let newTimeArray = new Array();
 
-    // 수강항목 테이블의 총 수강학점
-    // let totalCredit = Number(td.eq(2).text());
-    // $('#counter').html((function () {
-    //     var $this = $(this),
-    //         count = $(this).data('count') + totalCredit;
-
-    //     console.log(count);
-    //     $this.data('count', count);
-
-
-
-    //     if (count < 21) {
-    //         return '총 수강학점 : ' + count; // 현재 신청된 총 학점 출력
-    //     }
-    //     // CreditCheck(count); 
-    //     alert('최대 수강학점은 21학점입니다'); // 21학점 이상인 경우 경고창 출력
-    //     count = 21; // 학점 초기화
-    //     return '총 수강학점 : ' + count; // 21학점으로 초기화
-    // }))
-
+    // HTML id값으로 사용하기 위해 데이터 변경
     const days = {
         '월요일': 'mon',
         '화요일': 'tue',
@@ -89,94 +70,104 @@ $('.checkBtn').click(function () {
     // 시간표에서 충돌되는 과목을 확인 (추가된 항목들에 대해서 배열 생성후 새로 클릭된 요소의 배열과 비교하여 동일할목이 있을 경우 충돌과목으로 확인)
     if (checkCollision.indexOf(newDay) == -1 && checkCollision.indexOf(newDay1) == -1 && checkCollision.indexOf(newDay2) == -1 && checkCollision.indexOf(newDay3) == -1) {
         if (sbjCodeArr.indexOf(newPush) == -1) { // 과목중복 검사
-            checkCollision.push(newDay, newDay1, newDay2, newDay3); // 시간표 충돌 검사용 배열에 요소 추가
-            sbjCodeArr.push(newPush); // 과목 중복 검사용 배열에 요소 추가
-            // 선택된 변수를 선택된 Table 항목에 저장
-            let subjectCode = row.insertCell(0);
-            let subjectName = row.insertCell(1);
-            let credit = row.insertCell(2);
-            let major = row.insertCell(3);
-            let day = row.insertCell(4);
-            let time = row.insertCell(5);
-            let deleteButton = row.insertCell(6);
-            // Select Tag의 선택된 데이터를 가져옴 (요일, 시간 항목이 2개인경우 Hidden Select에 저장됨)
-            let subject = td.eq(0).text();
-            $(`#${subject} option`).each(function () {
-                newDayArray.push($(this).val());
-            });
-            $(`#${subject}Time option`).each(function () {
-                newTimeArray.push($(this).val());
-            });
-            // 선택된 데이터 배열 생성 (요일 포함)
-            let tdArr = [td.eq(0).text(), td.eq(1).text(), Number(td.eq(2).text()), td.eq(3).text(), newDayArray[0], newDayArray[1], newTimeArray[0], newTimeArray[1], $('#userId').text()];
-            console.log(tdArr);
+            if (count > 21) {
+                alert('21학점 이상은 신청할수 없습니다');
+            } else {
+                checkCollision.push(newDay, newDay1, newDay2, newDay3); // 시간표 충돌 검사용 배열에 요소 추가
+                sbjCodeArr.push(newPush); // 과목 중복 검사용 배열에 요소 추가
 
-            // 선택된 수강항목 테이블에 삽입
-            subjectCode.innerHTML = td.eq(0).text();
-            subjectName.innerHTML = td.eq(1).text();
-            credit.innerHTML = Number(td.eq(2).text());
-            major.innerHTML = td.eq(3).text();
-            day.innerHTML = newDayArray[0] + ' ' + newDayArray[1];
-            time.innerHTML = td.eq(5).text();
-            deleteButton.innerHTML = `<button id="remove_button">삭제</button>`;
+                // 총 수강학점 계산
+                // 수강신청 카운터
+                count += Number(td.eq(2).text());
+                console.log(`추가된 수강학점 : ${count}`);
+                $('#counter').text(`총 수강학점 : ${count}`);
+                // 선택된 변수를 선택된 Table 항목에 저장
+                let subjectCode = row.insertCell(0);
+                let subjectName = row.insertCell(1);
+                let credit = row.insertCell(2);
+                let major = row.insertCell(3);
+                let day = row.insertCell(4);
+                let time = row.insertCell(5);
+                let deleteButton = row.insertCell(6);
+                // Select Tag의 선택된 데이터를 가져옴 (요일, 시간 항목이 2개인경우 Hidden Select에 저장됨)
+                let subject = td.eq(0).text();
+                $(`#${subject} option`).each(function () {
+                    newDayArray.push($(this).val());
+                });
+                $(`#${subject}Time option`).each(function () {
+                    newTimeArray.push($(this).val());
+                });
+                // 선택된 데이터 배열 생성 (요일 포함)
+                let tdArr = [td.eq(0).text(), td.eq(1).text(), Number(td.eq(2).text()), td.eq(3).text(), newDayArray[0], newDayArray[1], newTimeArray[0], newTimeArray[1], $('#userId').text()];
+                console.log(tdArr);
+
+                // 선택된 수강항목 테이블에 삽입
+                subjectCode.innerHTML = td.eq(0).text();
+                subjectName.innerHTML = td.eq(1).text();
+                credit.innerHTML = Number(td.eq(2).text());
+                major.innerHTML = td.eq(3).text();
+                day.innerHTML = newDayArray[0] + ' ' + newDayArray[1];
+                time.innerHTML = td.eq(5).text();
+                deleteButton.innerHTML = `<button id="remove_${td.eq(0).text()}">삭제</button>`;
 
 
-            // 클릭된 항목의 Select 태그에서 Hidden 속성을 가지고 있는 데이터를 가져옴
-            let clickedItem = td.eq(0).text();
-            $('#' + clickedItem + ' option').each(function () {
-                dayArray.push($(this).val());
-            });
-            $('#' + clickedItem + 'Time option').each(function () {
-                timeArray.push($(this).val());
-            });
+                // 클릭된 항목의 Select 태그에서 Hidden 속성을 가지고 있는 데이터를 가져옴
+                let clickedItem = td.eq(0).text();
+                $('#' + clickedItem + ' option').each(function () {
+                    dayArray.push($(this).val());
+                });
+                $('#' + clickedItem + 'Time option').each(function () {
+                    timeArray.push($(this).val());
+                });
 
-            let timelineColor = getRamdomColor(); // 랜덤 색상 함수를 호출하여 색상 데이터 저장
+                let timelineColor = getRamdomColor(); // 랜덤 색상 함수를 호출하여 색상 데이터 저장
 
-            // 가져온 데이터를 HTML id값으로 변경하기위하여 switch 문으로 day값 변경
-            for (i = 0; i < dayArray.length; i++) {
-                let day;
-                switch (dayArray[i]) {
-                    case '월요일':
-                        day = 'mon';
-                        break;
-                    case '화요일':
-                        day = 'tue';
-                        break;
-                    case '수요일':
-                        day = 'wed';
-                        break;
-                    case '목요일':
-                        day = 'tur';
-                        break;
-                    case '금요일':
-                        day = 'fri';
-                        break;
+                // 가져온 데이터를 HTML id값으로 변경하기위하여 switch 문으로 day값 변경
+                for (i = 0; i < dayArray.length; i++) {
+                    let day;
+                    switch (dayArray[i]) {
+                        case '월요일':
+                            day = 'mon';
+                            break;
+                        case '화요일':
+                            day = 'tue';
+                            break;
+                        case '수요일':
+                            day = 'wed';
+                            break;
+                        case '목요일':
+                            day = 'tur';
+                            break;
+                        case '금요일':
+                            day = 'fri';
+                            break;
+                    }
+                    // 변환된 요일을 클릭된 요일에 저장
+                    let clickDay = day + timeArray[i];
+                    let clickDay1 = day + (Number(timeArray[i]) + 1);
+                    $(`#${clickDay}`).text(td.eq(1).text());
+                    let table = document.getElementById(clickDay);
+                    let table1 = document.getElementById(clickDay1);
+
+                    // 1~2학점의 데이터의 경우 table값이 Null이되는 항목들이 발생함
+                    if (table === null) {
+                        console.log('1~2학점 항목을 선택하였습니다');
+                    } else {
+                        // 1~2학점의 데이터의 경우 칸 두 개만 CSS변경
+                        table.style.backgroundColor = timelineColor;
+                        table1.style.backgroundColor = timelineColor;
+                    }
                 }
-                // 변환된 요일을 클릭된 요일에 저장
-                let clickDay = day + timeArray[i];
-                let clickDay1 = day + (Number(timeArray[i]) + 1);
-                $(`#${clickDay}`).text(td.eq(1).text());
-                let table = document.getElementById(clickDay);
-                let table1 = document.getElementById(clickDay1);
-
-                // 1~2학점의 데이터의 경우 table값이 Null이되는 항목들이 발생함
-                if (table === null) {
-                    console.log('1~2학점 항목을 선택하였습니다');
-                } else {
-                    // 1~2학점의 데이터의 경우 칸 두 개만 CSS변경
-                    table.style.backgroundColor = timelineColor;
-                    table1.style.backgroundColor = timelineColor;
-                }
+                // SQL Value값으로 전달할 변수 생성
+                let userIdData = $('#userId').text();
+                let sbjCodeData = td.eq(0).text();
+                let sjbNameData = td.eq(1).text();
+                // SQL 데이터 생성
+                finalData += `('${userIdData}','${sbjCodeData}','${sjbNameData}'),`;
+                console.log(finalData);
+                // 서버로 전달될 데이터 전달용 코드
+                $(`#data`).attr('value', finalData.slice(0, -1)); // 마지막 항목의 경우 쉼표가 추가되므로 , 제거
             }
-            // SQL Value값으로 전달할 변수 생성
-            let userIdData = $('#userId').text();
-            let sbjCodeData = td.eq(0).text();
-            let sjbNameData = td.eq(1).text();
-            // SQL 데이터 생성
-            finalData += `('${userIdData}','${sbjCodeData}','${sjbNameData}'),`;
-            console.log(finalData);
-            // 서버로 전달될 데이터 전달용 코드
-            $(`#data`).attr('value', finalData.slice(0, -1)); // 마지막 항목의 경우 쉼표가 추가되므로 , 제거
         } else {
             // 이미 해당 과목이 추가되었을 경우
             alert(`${newPush} 과목은 이미 수강신청 항목에 추가된 과목입니다.`)
@@ -188,10 +179,14 @@ $('.checkBtn').click(function () {
         console.log(checkCollision);
     }
 
+
     // 삭제버튼 클릭시 수강항목 테이블에서 데이터 제거
-    $('button').click(function () {
-        let removeCredit = Number($('#remove_button').parents('tr').children('td:eq(2)').text());
-        console.log(`삭제된 학점 : ${removeCredit}`);
+    $(`#remove_${td.eq(0).text()}`).click(function () {
+        // 삭제시 총 수강 학점 계산
+        count = count - Number($(`#remove_${td.eq(0).text()}`).parents('tr').children('td:eq(2)').text());
+        console.log(`삭제 후 수강학점 : ${count}`);
+        // 삭제 버튼 클릭시 삭제된 학점 HTML에 반영
+        $('#counter').text(`총 수강학점 : ${count}`);
 
         // 버튼이 클릭된 항목들에 대해서 선택된 항목에 추가하기 위해 변수 생성
         let clickTime = $(this).parents('tr').children('td:eq(5)').text().substring(0, 1);
@@ -215,8 +210,8 @@ $('.checkBtn').click(function () {
         let firstTable1 = document.getElementById(day1 + Number(clickTime1));
         let secondTable = document.getElementById(day + (Number(clickTime) + 1));
         let secondTable1 = document.getElementById(day1 + (Number(clickTime1) + 1));
-        console.log((day + clickTime), (day + (Number(clickTime) + 1)), (day1 + clickTime1), (day + (Number(clickTime1) + 1)));
-        console.log(firstTable, firstTable1, secondTable, secondTable1);
+        // console.log((day + clickTime), (day + (Number(clickTime) + 1)), (day1 + clickTime1), (day + (Number(clickTime1) + 1)));
+        // console.log(firstTable, firstTable1, secondTable, secondTable1);
 
         // 시간표 충돌 확인 배열에서 요일 교시 데이터 삭제
         checkCollision.pop(day + clickTime);
@@ -247,8 +242,10 @@ $('.checkBtn').click(function () {
 
         // 최종적으로 UI상에서 선택된 수강항목 목록에서 TR 태그 삭제
         $(this).parents('tr').first().remove(); // 선택된 수강항목 목록에서 tr 요소 삭제
+
     });
 })
+
 
 // 각 행을 클릭하였을 경우 임시 예상 시간표 출력
 $(document).ready(function () {
