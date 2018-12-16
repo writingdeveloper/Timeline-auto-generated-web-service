@@ -68,6 +68,7 @@ router.post('/membercheck', function (req, res, next) {
     }
     if (data.length > 0) {
       console.log('EXIST!');
+      res.redirect(`/${userId}/complete`)
     } else {
       console.log('NEW MEMBER');
       res.redirect(`/${userId}`);
