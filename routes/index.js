@@ -39,6 +39,18 @@ router.get(`/:userId/complete`, function (req, res, next) {
   });
 });
 
+router.get('/db/admin', function (req, res, next) {
+  // 신청된 전체 수강신청 데이터를 가져옴
+  db.query(`SELECT * FROM USER_DATA`, function (error, data) {
+    if (error) {
+      throw error;
+    }
+    res.render('admin', {
+      dataArray: data
+    });
+  });
+});
+
 /* 수강 신청 제출 라우터 POST */
 router.post(`/:userId/submit`, function (req, res, next) {
   let userId = req.params.userId;
