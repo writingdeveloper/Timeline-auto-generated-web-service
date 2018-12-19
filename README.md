@@ -7,7 +7,7 @@
 현재 이 웹서비스는 두가지 호스팅을 통하여 호스팅되고 있습니다.
 
 #1 [Heroku NodeJS 호스팅] : https://auto-timeline.herokuapp.com (Heroku 서버의 경우 1차접속 속도가 느릴수 있습니다)  
-#2 [개인 라즈베리파이 호스팅] : 작업중
+#2 [개인 라즈베리파이 호스팅] : 작업중 -> Intel NUC 서버로 
 
 ## 소개
 
